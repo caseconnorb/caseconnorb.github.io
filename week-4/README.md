@@ -1,0 +1,7 @@
+For this assignment, I took the page I made for week 3 and reorganized it. Most of my edits were based on moving pieces of code out of the setup() and draw() functions, and making them their own functions that can be called whenever needed. This made my main functions much cleaner, and allowed me to perform the same function in multiple places without having to rewrite it.
+
+I made a number of different functions to do the things that were previously done directly. For example, the fill of the objects on screen has to change to a random value at certain times; when the page is started and when the mouse is pressed. I created a function called randomColors() which sets the colors to random, and set it to be called at the times I needed it.
+
+Some functions are also called withing special criteria in other functions. For example, the randomDir() function, which sets the movement speed and direction of the circle to random, is called in the setup function, but it is also called in an if statement in the mousePressed function, so that the direction will be set to random when the mouse clicks on the button, as well as when the page is loaded.
+
+The button is the one change to this program that will be visible to the user. In the new makeButton() function, there is now a line of code that will set the fill to 0, draw a piece of text that says "Press!" inside the function, and then return the fill to its previous values, so it will only affect the text. From a user perspective, this will hopefully make the button's purpose more obvious.
