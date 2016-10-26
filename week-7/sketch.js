@@ -39,12 +39,16 @@ function pacmanCollide() {
       pacmanDistance = dist(pacmanX, pacmanY, pacmen[j].pXPos, pacmen[j].pYPos);
       if (pacmanDistance <= pacmanDiam && pacmen[j].pXPos > pacmanX && pacmanXDirection == 1) {
         pacmen[i].stopMoving(); // pacman stops if it collides with another pacman that is to the right of it and it is moving east
-        } else if (pacmanDistance <= pacmanDiam && pacmen[j].pXPos < pacmanX && pacmanXDirection == -1) {
-          pacmen[i].stopMoving(); // pacman stops if it collides with another pacman that is to the left of it and it is moving west
-        } else if (pacmanDistance <= pacmanDiam && pacmen[j].pYPos > pacmanY && pacmanYDirection == 1) {
-          pacmen[i].stopMoving(); // pacman stops if it collides with another pacman that is below it and it is moving down
-        } else if (pacmanDistance <= pacmanDiam && pacmen[j].pYPos < pacmanY && pacmanYDirection == -1) {
-          pacmen[i].stopMoving(); //nDistance <= pacman stops if it collides with another pacman that is above it and it is moving up
+        pacmen[i].pXPos = pacmanX - (pacmanDiam - pacmanDistance); // prevents the pacmen from overlapping
+      } else if (pacmanDistance <= pacmanDiam && pacmen[j].pXPos < pacmanX && pacmanXDirection == -1) {
+        pacmen[i].stopMoving(); // pacman stops if it collides with another pacman that is to the left of it and it is moving west
+        pacmen[i].pXPos = pacmanX + (pacmanDiam - pacmanDistance);
+      } else if (pacmanDistance <= pacmanDiam && pacmen[j].pYPos > pacmanY && pacmanYDirection == 1) {
+        pacmen[i].stopMoving(); // pacman stops if it collides with another pacman that is below it and it is moving down
+        pacmen[i].pYPos = pacmanY - (pacmanDiam - pacmanDistance);
+      } else if (pacmanDistance <= pacmanDiam && pacmen[j].pYPos < pacmanY && pacmanYDirection == -1) {
+        pacmen[i].stopMoving(); //nDistance <= pacman stops if it collides with another pacman that is above it and it is moving up
+        pacmen[i].pYPos = pacmanY + (pacmanDiam - pacmanDistance);
       }
     }
 
