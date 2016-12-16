@@ -1,15 +1,12 @@
 function MakeQuad(canvWidth, canvHeight) {
-  this.trueFalse = [-1, 1];
+  this.trueFalse = [-1, 1]; //variable that can be 1 or -1, to be called
 
-  this.canvLeftBound = -200;
+  this.canvLeftBound = -200; //variables for the boundaries outside the visible canvas
   this.canvRightBound = canvWidth + 200;
   this.canvTopBound = -200;
   this.canvBottomBound = canvHeight + 200;
 
-  // this.quadX = [random(canvWidth), random(canvWidth), random(canvWidth), random(canvWidth)];
-  // this.quadY = [random(canvHeight), random(canvHeight), random(canvHeight), random(canvHeight)];
-
-  this.quadX1 = random(canvWidth);
+  this.quadX1 = random(canvWidth); //variables for the quad points
   this.quadY1 = random(canvHeight);
   this.quadX2 = random(canvWidth);
   this.quadY2 = random(canvHeight);
@@ -18,10 +15,7 @@ function MakeQuad(canvWidth, canvHeight) {
   this.quadX4 = random(canvWidth);
   this.quadY4 = random(canvHeight);
 
-  // this.quadXChange = [random(-5, 6), random(-5, 6), random(-5, 6), random(-5, 6)];
-  // this.quadYChange = [random(-5, 6), random(-5, 6), random(-5, 6), random(-5, 6)];
-
-  this.quadX1Change = random(-5, 6);
+  this.quadX1Change = random(-5, 6); //variables used to change the position of the quad points
   this.quadY1Change = random(-5, 6);
   this.quadX2Change = random(-5, 6);
   this.quadY2Change = random(-5, 6);
@@ -43,24 +37,17 @@ function MakeQuad(canvWidth, canvHeight) {
   this.timeGoal = random(this.secTimeMax + 1);
 }
 
-MakeQuad.prototype.drawQuad = function() {
+MakeQuad.prototype.drawShape = function() {
   push();
-  fill(this.rFill, this.gFill, this.bFill);
+  noStroke();
+  fill(this.rFill, this.gFill, this.bFill, 95); //fills quad with the color variables
   quad(this.quadX1, this.quadY1, this.quadX2, this.quadY2, this.quadX3, this.quadY3, this.quadX4, this.quadY4);
   pop();
 }
 
-MakeQuad.prototype.changeQSize = function() {
+MakeQuad.prototype.changeSize = function() {
 
-  // for (var i = 0; i <= this.quadX.length; i++) {
-  //   this.quadX[i] += this.quadXChange[i];
-  // }
-
-  // for (var j = 0; j <= this.quadY.length; j++) {
-  //   this.quadY[j] += this.quadYChange[j];
-  // }
-
-  this.quadX1 += this.quadX1Change;
+  this.quadX1 += this.quadX1Change; //changes point locations based on the change variables
   this.quadY1 += this.quadY1Change;
   this.quadX2 += this.quadX2Change;
   this.quadY2 += this.quadY2Change;
@@ -72,18 +59,9 @@ MakeQuad.prototype.changeQSize = function() {
   this.boundaryCheck();
 }
 
-MakeQuad.prototype.quadChangeChange = function() {
+MakeQuad.prototype.shapeChangeChange = function() {
 
-  // for (var i = 0; i <= this.quadXChange.length; i++) {
-  //   this.quadXChange[i] += random(this.trueFalse);
-  // }
-
-  // for (var j = 0; j <= this.quadYChange.length; j++) {
-  //   this.quadYChange[j] += random(this.trueFalse);
-  // }
-
-
-  this.quadX1Change += random(this.trueFalse);
+  this.quadX1Change += random(this.trueFalse); //randomly changes these variables by one in either direction
   this.quadY1Change += random(this.trueFalse);
   this.quadX2Change += random(this.trueFalse);
   this.quadY2Change += random(this.trueFalse);
@@ -93,17 +71,17 @@ MakeQuad.prototype.quadChangeChange = function() {
   this.quadY4Change += random(this.trueFalse);
 }
 
-MakeQuad.prototype.quadTimer = function() { // creates a timer
+MakeQuad.prototype.timer = function() { // creates a timer
   if (this.secTime >= this.timeGoal) {
-    this.quadChangeChange(); // calls function when timer elapses
+    this.shapeChangeChange(); // calls function when timer elapses
     this.secTime = 0; // resets timer
-    this.timeGoal = random(0, this.secTimeMax + 1); // resetst random timer goal
+    this.timeGoal = random(0, this.secTimeMax + 1); // resets random timer goal
   } else {
     this.secTime++; //increments timer
   }
 }
 
-MakeQuad.prototype.boundaryCheck = function() {
+MakeQuad.prototype.boundaryCheck = function() { //ensures the quads return to the scetch if they leave
   if (this.quadX1 <= this.canvLeftBound && this.quadX1Change < 0) {
     this.quadX1Change = this.quadX1Change * -1
   } else if (this.quadX1 >= this.canvRightBound && this.quadX1Change > 0) {
@@ -146,7 +124,7 @@ MakeQuad.prototype.boundaryCheck = function() {
   }
 }
 
-MakeQuad.prototype.changeQColor = function() {
+MakeQuad.prototype.changeColor = function() {
   this.rFill += this.rFillDirec; // increases color
   if (this.rFill >= 255 && this.rFillDirec > 0 || this.rFill <= 0 && this.rFillDirec < 0) {
     this.rFillDirec = this.rFillDirec * -1; // resets it to 0 if it gets to 255
@@ -159,4 +137,10 @@ MakeQuad.prototype.changeQColor = function() {
   if (this.bFill >= 255 && this.gFillDirec > 0 || this.bFill <= 0 && this.gFillDirec < 0) {
     this.bFillDirec = this.bFillDirec * -1; // resets it to 0 if it gets to 255
   }
+}
+
+MakeQuad.prototype.resizeWindow = function(canvWidth, canvHeight) {
+  this.canvRightBound = canvWidth + 200; //resets the boundaries to canvas size if called
+  this.canvBottomBound = canvHeight + 200;
+
 }
